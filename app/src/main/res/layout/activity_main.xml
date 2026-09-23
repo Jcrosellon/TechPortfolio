@@ -11,6 +11,7 @@
 
     <!-- Barra superior -->
     <LinearLayout
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:orientation="horizontal"
@@ -39,34 +40,53 @@
     </LinearLayout>
 
     <!-- Cuerpo -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_weight="1">
 
-        <!-- Navegación izquierda -->
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/menuFragmentContainer"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:background="@color/tp_surface" />
+            android:orientation="horizontal">
 
-        <!-- Separador -->
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/tp_border" />
+            <!-- Navegación izquierda -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/menuFragmentContainer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:background="@color/tp_surface" />
 
-        <!-- Contenido -->
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/contentFragmentContainer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2.3"
-            android:background="@color/tp_background" />
+            <!-- Separador -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/tp_border" />
 
-    </LinearLayout>
+            <!-- Contenido -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/contentFragmentContainer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.3"
+                android:background="@color/tp_background" />
+
+        </LinearLayout>
+
+        <!-- Control táctil sobre el borde del sidebar -->
+        <ImageButton
+            android:id="@+id/btnToggleMenu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Cerrar menú"
+            android:elevation="4dp"
+            android:layout_gravity="top|start"
+            android:padding="10dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="@color/tp_navy" />
+
+    </FrameLayout>
 
 </LinearLayout>
