@@ -1,6 +1,7 @@
 package com.techportfolio.app;
 
 import android.os.Bundle;
+import android.content.res.Configuration;
 import android.util.TypedValue;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -23,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String MENU_EXPANDED_STATE = "menu_expanded";
     private static final float EXPANDED_MENU_WEIGHT = 0.9f;
     private static final float EXPANDED_CONTENT_WEIGHT = 2.3f;
+    private static final int LANDSCAPE_MENU_WIDTH_DP = 168;
 
     private FragmentContainerView menuContainer;
     private FragmentContainerView contentContainer;
+    private View sidebarDivider;
     private ImageButton toggleMenuButton;
     private LinearLayout topBar;
     private TextView tvAndroid;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         menuContainer = findViewById(R.id.menuFragmentContainer);
         contentContainer = findViewById(R.id.contentFragmentContainer);
+        sidebarDivider = findViewById(R.id.sidebarDivider);
         toggleMenuButton = findViewById(R.id.btnToggleMenu);
         topBar = findViewById(R.id.topBar);
         tvAndroid = findViewById(R.id.tvAndroid);
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 positionToggleButton()
         );
         setMenuExpanded(menuExpanded);
+        aplicarLayoutOrientacion();
 
         if (savedInstanceState == null) {
 
@@ -110,7 +115,15 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout.LayoutParams contentParams =
                 (LinearLayout.LayoutParams) contentContainer.getLayoutParams();
 
-        if (expanded) {
+        boolean horizontal = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (expanded && horizontal) {
+            menuParams.width = dpToPx(LANDSCAPE_MENU_WIDTH_DP);
+            menuParams.weight = 0;
+            contentParams.width = 0;
+            contentParams.weight = 1;
+        } else if (expanded) {
             menuParams.width = 0;
             menuParams.weight = EXPANDED_MENU_WEIGHT;
             contentParams.width = 0;
@@ -157,6 +170,23 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        aplicarLayoutOrientacion();
+    }
+
+    private void aplicarLayoutOrientacion() {
+        boolean horizontal = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+
+        topBar.setVisibility(View.VISIBLE);
+        menuContainer.setVisibility(View.VISIBLE);
+        toggleMenuButton.setVisibility(View.VISIBLE);
+        sidebarDivider.setVisibility(View.VISIBLE);
+        setMenuExpanded(menuExpanded);
+    }
+
     private void configurarTextoAndroid() {
         androidBlinkAnimator = ObjectAnimator.ofFloat(tvAndroid, View.ALPHA, 1f, 0.35f, 1f);
         androidBlinkAnimator.setDuration(900);
@@ -168,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     private void mostrarIconoAndroid() {
         FrameLayout contentRoot = findViewById(android.R.id.content);
         ImageView icono = new ImageView(this);
-        icono.setImageResource(R.drawable.ic_launcher_foreground);
+        icono.setImageResource(R.drawable.android);
         icono.setBackgroundColor(Color.TRANSPARENT);
         icono.setContentDescription("Icono Android animado");
 

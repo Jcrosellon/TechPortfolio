@@ -2,6 +2,7 @@ package com.techportfolio.app;
 
 import android.os.Bundle;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,10 +58,45 @@ public class WebFragment extends Fragment {
         webViewContainer = view.findViewById(R.id.webViewContainer);
         historialContainer = view.findViewById(R.id.historialContainer);
         webProgress = view.findViewById(R.id.webProgress);
+        ajustarContenidoHorizontal(view);
 
         btnBuscarWeb.setOnClickListener(v -> cargarPagina());
 
         return view;
+    }
+
+    private void ajustarContenidoHorizontal(View view) {
+        boolean horizontal = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+        if (!horizontal) {
+            return;
+        }
+
+        TextView titulo = view.findViewById(R.id.webTitle);
+        TextView subtitulo = view.findViewById(R.id.webSubtitle);
+        TextView etiqueta = view.findViewById(R.id.webAddressLabel);
+        HorizontalScrollView historialView = view.findViewById(R.id.webHistoryScroll);
+        LinearLayout controles = view.findViewById(R.id.webControls);
+        LinearLayout contenido = view.findViewById(R.id.webContentCard);
+
+        titulo.setTextSize(24);
+        subtitulo.setTextSize(14);
+        etiqueta.setVisibility(View.GONE);
+        historialView.getLayoutParams().height = dpToPx(34);
+        historialView.setLayoutParams(historialView.getLayoutParams());
+        historialView.setVisibility(View.GONE);
+
+        controles.setPadding(dpToPx(8), dpToPx(4), dpToPx(8), dpToPx(4));
+        LinearLayout.LayoutParams controlesParams =
+                (LinearLayout.LayoutParams) controles.getLayoutParams();
+        controlesParams.topMargin = dpToPx(6);
+        controles.setLayoutParams(controlesParams);
+
+        LinearLayout.LayoutParams contenidoParams =
+                (LinearLayout.LayoutParams) contenido.getLayoutParams();
+        contenidoParams.topMargin = dpToPx(8);
+        contenido.setLayoutParams(contenidoParams);
+        contenido.setPadding(dpToPx(2), dpToPx(2), dpToPx(2), dpToPx(2));
     }
 
     private void configurarWebView() {
