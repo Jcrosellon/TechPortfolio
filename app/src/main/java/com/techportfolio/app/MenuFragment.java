@@ -37,7 +37,7 @@ public class MenuFragment extends Fragment {
             android.R.drawable.ic_menu_gallery,
             android.R.drawable.ic_media_play,
             android.R.drawable.ic_menu_view,
-            android.R.drawable.ic_menu_manage
+            android.R.drawable.ic_menu_sort_by_size
     };
 
     public MenuFragment() {
@@ -128,8 +128,10 @@ public class MenuFragment extends Fragment {
 
         for (int i = 0; i < botones.length; i++) {
             botones[i].setText(expanded ? nombres[i] : "");
+            botones[i].setSingleLine(true);
+            botones[i].setTextSize(expanded ? 12 : 13);
             botones[i].setGravity(expanded ? Gravity.CENTER_VERTICAL : Gravity.CENTER);
-            botones[i].setPadding(expanded ? dpToPx(12) : 0, 0, 0, 0);
+            botones[i].setPadding(expanded ? dpToPx(8) : 0, 0, 0, 0);
             iconosVisibles[i].setVisibility(expanded ? View.GONE : View.VISIBLE);
 
             if (expanded) {

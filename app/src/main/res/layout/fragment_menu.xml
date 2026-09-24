@@ -43,12 +43,13 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/tp_blue_light"
             android:gravity="center_vertical"
-            android:paddingStart="12dp"
+            android:paddingStart="8dp"
             android:contentDescription="Perfil"
             android:text="Perfil"
             android:textAllCaps="false"
             android:textColor="@color/tp_blue"
-            android:textSize="13sp" />
+            android:textSize="12sp"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/iconPerfil"
@@ -72,12 +73,13 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
-            android:paddingStart="12dp"
+            android:paddingStart="8dp"
             android:contentDescription="Fotos"
             android:text="Fotos"
             android:textAllCaps="false"
             android:textColor="@color/tp_text_primary"
-            android:textSize="13sp" />
+            android:textSize="12sp"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/iconFotos"
@@ -101,12 +103,13 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
-            android:paddingStart="12dp"
+            android:paddingStart="8dp"
             android:contentDescription="Video"
             android:text="Video"
             android:textAllCaps="false"
             android:textColor="@color/tp_text_primary"
-            android:textSize="13sp" />
+            android:textSize="12sp"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/iconVideo"
@@ -130,12 +133,13 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
-            android:paddingStart="12dp"
+            android:paddingStart="8dp"
             android:contentDescription="Web"
             android:text="Web"
             android:textAllCaps="false"
             android:textColor="@color/tp_text_primary"
-            android:textSize="13sp" />
+            android:textSize="12sp"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/iconWeb"
@@ -159,12 +163,13 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
-            android:paddingStart="12dp"
+            android:paddingStart="8dp"
             android:contentDescription="Botones"
             android:text="Botones"
             android:textAllCaps="false"
             android:textColor="@color/tp_text_primary"
-            android:textSize="13sp" />
+            android:textSize="12sp"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/iconBotones"
@@ -172,7 +177,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:importantForAccessibility="no"
-            android:src="@android:drawable/ic_menu_manage"
+            android:src="@android:drawable/ic_menu_sort_by_size"
             android:visibility="gone" />
 
     </FrameLayout>

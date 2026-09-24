@@ -40,31 +40,52 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/etUrl"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="www.google.com"
-            android:inputType="textUri"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:singleLine="true"
-            android:textColor="@color/tp_text_primary"
-            android:textColorHint="@color/tp_text_secondary"
-            android:textSize="14sp" />
+            android:layout_marginTop="8dp">
 
-        <Button
-            android:id="@+id/btnAbrirWeb"
+            <EditText
+                android:id="@+id/etUrl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_input"
+                android:hint="www.google.com"
+                android:inputType="textUri"
+                android:paddingStart="14dp"
+                android:paddingEnd="56dp"
+                android:singleLine="true"
+                android:textColor="@color/tp_text_primary"
+                android:textColorHint="@color/tp_text_secondary"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/btnBuscarWeb"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:background="@android:color/transparent"
+                android:contentDescription="Buscar página"
+                android:padding="12dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:tint="@color/tp_text_secondary" />
+
+        </FrameLayout>
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/tp_blue"
-            android:text="Abrir página"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/historialContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
 
     </LinearLayout>
 
@@ -80,7 +101,17 @@
         <FrameLayout
             android:id="@+id/webViewContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/webProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/tp_blue"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

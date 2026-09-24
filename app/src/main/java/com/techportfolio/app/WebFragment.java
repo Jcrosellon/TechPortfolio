@@ -1,6 +1,8 @@
 package com.techportfolio.app;
 
 import android.os.Bundle;
+import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +11,28 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
 
 public class WebFragment extends Fragment {
 
     private EditText etUrl;
-    private Button btnAbrirWeb;
+    private ImageButton btnBuscarWeb;
     private FrameLayout webViewContainer;
+    private LinearLayout historialContainer;
+    private ProgressBar webProgress;
     private WebView webView;
+    private final ArrayList<String> historial = new ArrayList<>();
 
     public WebFragment() {
         // Constructor vacío requerido
@@ -40,10 +52,12 @@ public class WebFragment extends Fragment {
         );
 
         etUrl = view.findViewById(R.id.etUrl);
-        btnAbrirWeb = view.findViewById(R.id.btnAbrirWeb);
+        btnBuscarWeb = view.findViewById(R.id.btnBuscarWeb);
         webViewContainer = view.findViewById(R.id.webViewContainer);
+        historialContainer = view.findViewById(R.id.historialContainer);
+        webProgress = view.findViewById(R.id.webProgress);
 
-        btnAbrirWeb.setOnClickListener(v -> cargarPagina());
+        btnBuscarWeb.setOnClickListener(v -> cargarPagina());
 
         return view;
     }
@@ -51,7 +65,17 @@ public class WebFragment extends Fragment {
     private void configurarWebView() {
 
         // Mantiene la navegación dentro de la aplicación
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+                webProgress.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                webProgress.setVisibility(View.GONE);
+            }
+        });
 
         // Algunas páginas modernas necesitan JavaScript
         webView.getSettings().setJavaScriptEnabled(true);
@@ -70,6 +94,7 @@ public class WebFragment extends Fragment {
                 FrameLayout.LayoutParams.MATCH_PARENT
         ));
         webViewContainer.addView(webView);
+        webProgress.bringToFront();
         configurarWebView();
     }
 
@@ -95,7 +120,72 @@ public class WebFragment extends Fragment {
         }
 
         prepararWebView();
+        agregarAlHistorial(url);
         webView.loadUrl(url);
+    }
+
+    private void agregarAlHistorial(String url) {
+        historial.remove(url);
+        historial.add(0, url);
+        while (historial.size() > 4) {
+            historial.remove(historial.size() - 1);
+        }
+
+        historialContainer.removeAllViews();
+        for (String elemento : historial) {
+            Button boton = new Button(requireContext());
+            boton.setText(obtenerEtiquetaHistorial(elemento));
+            boton.setAllCaps(false);
+            boton.setTextSize(12);
+            boton.setContentDescription(elemento);
+            boton.setTextColor(ContextCompat.getColor(requireContext(), R.color.tp_blue));
+            boton.setBackgroundTintList(ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.tp_blue_light)
+            ));
+            boton.setMinHeight(0);
+            boton.setMinWidth(0);
+            boton.setPadding(dpToPx(12), 0, dpToPx(12), 0);
+            boton.setOnClickListener(v -> {
+                etUrl.setText(elemento);
+                etUrl.setSelection(etUrl.length());
+                cargarPagina();
+            });
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    dpToPx(60),
+                    dpToPx(40)
+            );
+            params.setMarginEnd(dpToPx(8));
+            historialContainer.addView(boton, params);
+        }
+    }
+
+    private String obtenerEtiquetaHistorial(String url) {
+        String host = Uri.parse(url).getHost();
+        if (host == null || host.isEmpty()) {
+            return url.substring(0, Math.min(2, url.length())).toUpperCase();
+        }
+
+        host = host.replace("www.", "");
+        String[] partes = host.split("\\.");
+        String nombre = partes[0];
+        if (nombre.equals("youtube")) {
+            return "YT";
+        }
+        if (nombre.equals("google")) {
+            return "GO";
+        }
+        if (nombre.equals("github")) {
+            return "GH";
+        }
+        if (nombre.length() == 1) {
+            return nombre.toUpperCase();
+        }
+        return nombre.substring(0, 2).toUpperCase();
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
     }
 
     @Override
