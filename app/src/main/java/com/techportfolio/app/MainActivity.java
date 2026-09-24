@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(
                             R.id.contentFragmentContainer,
-                            new PerfilFragment()
+                            new PerfilFragment(),
+                            "perfil"
                     )
                     .commit();
         }

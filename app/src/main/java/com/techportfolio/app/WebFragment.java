@@ -8,6 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class WebFragment extends Fragment {
 
     private EditText etUrl;
     private Button btnAbrirWeb;
+    private FrameLayout webViewContainer;
     private WebView webView;
 
     public WebFragment() {
@@ -39,9 +41,7 @@ public class WebFragment extends Fragment {
 
         etUrl = view.findViewById(R.id.etUrl);
         btnAbrirWeb = view.findViewById(R.id.btnAbrirWeb);
-        webView = view.findViewById(R.id.webView);
-
-        configurarWebView();
+        webViewContainer = view.findViewById(R.id.webViewContainer);
 
         btnAbrirWeb.setOnClickListener(v -> cargarPagina());
 
@@ -57,6 +57,20 @@ public class WebFragment extends Fragment {
         webView.getSettings().setJavaScriptEnabled(true);
 
         webView.getSettings().setDomStorageEnabled(true);
+    }
+
+    private void prepararWebView() {
+        if (webView != null) {
+            return;
+        }
+
+        webView = new WebView(requireContext());
+        webView.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        ));
+        webViewContainer.addView(webView);
+        configurarWebView();
     }
 
     private void cargarPagina() {
@@ -80,6 +94,30 @@ public class WebFragment extends Fragment {
             url = "https://" + url;
         }
 
+        prepararWebView();
         webView.loadUrl(url);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (webView != null) {
+            if (hidden) {
+                webView.onPause();
+                webView.stopLoading();
+            } else {
+                webView.onResume();
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (webView != null) {
+            webView.stopLoading();
+            webView.destroy();
+            webView = null;
+        }
+        super.onDestroyView();
     }
 }

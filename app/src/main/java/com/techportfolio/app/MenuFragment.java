@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -143,58 +145,46 @@ public class MenuFragment extends Fragment {
     }
 
     private void abrirPerfil() {
-
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(
-                        R.id.contentFragmentContainer,
-                        new PerfilFragment()
-                )
-                .commit();
+        mostrarFragmento("perfil", new PerfilFragment());
     }
 
     private void abrirFotos() {
-
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(
-                        R.id.contentFragmentContainer,
-                        new FotosFragment()
-                )
-                .commit();
+        mostrarFragmento("fotos", new FotosFragment());
     }
 
     private void abrirVideo() {
-
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(
-                        R.id.contentFragmentContainer,
-                        new VideoFragment()
-                )
-                .commit();
+        mostrarFragmento("video", new VideoFragment());
     }
 
     private void abrirWeb() {
-
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(
-                        R.id.contentFragmentContainer,
-                        new WebFragment()
-                )
-                .commit();
+        mostrarFragmento("web", new WebFragment());
     }
 
     private void abrirBotones() {
 
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(
-                        R.id.contentFragmentContainer,
-                        new BotonesFragment()
-                )
-                .commit();
+        mostrarFragmento("botones", new BotonesFragment());
+    }
+
+    private void mostrarFragmento(String tag, Fragment fragmentoNuevo) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        Fragment actual = fragmentManager.findFragmentById(R.id.contentFragmentContainer);
+        Fragment destino = fragmentManager.findFragmentByTag(tag);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction()
+                .setReorderingAllowed(true);
+
+        if (destino == null) {
+            destino = fragmentoNuevo;
+            transaction.add(R.id.contentFragmentContainer, destino, tag);
+        } else {
+            transaction.show(destino);
+        }
+
+        if (actual != null && actual != destino) {
+            transaction.hide(actual);
+        }
+
+        transaction.commit();
     }
 
     private void seleccionarBoton(Button botonSeleccionado) {
