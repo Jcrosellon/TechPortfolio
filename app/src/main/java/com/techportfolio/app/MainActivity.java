@@ -2,9 +2,17 @@ package com.techportfolio.app;
 
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -20,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentContainerView contentContainer;
     private ImageButton toggleMenuButton;
     private LinearLayout topBar;
+    private TextView tvAndroid;
+    private ObjectAnimator androidBlinkAnimator;
     private boolean menuExpanded = true;
 
     @Override
@@ -36,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         contentContainer = findViewById(R.id.contentFragmentContainer);
         toggleMenuButton = findViewById(R.id.btnToggleMenu);
         topBar = findViewById(R.id.topBar);
+        tvAndroid = findViewById(R.id.tvAndroid);
+        configurarTextoAndroid();
         toggleMenuButton.setOnClickListener(v -> toggleMenu());
         menuContainer.addOnLayoutChangeListener((v, left, top, right, bottom,
                                                   oldLeft, oldTop, oldRight, oldBottom) ->
@@ -143,5 +155,66 @@ public class MainActivity extends AppCompatActivity {
                 dp,
                 getResources().getDisplayMetrics()
         );
+    }
+
+    private void configurarTextoAndroid() {
+        androidBlinkAnimator = ObjectAnimator.ofFloat(tvAndroid, View.ALPHA, 1f, 0.35f, 1f);
+        androidBlinkAnimator.setDuration(900);
+        androidBlinkAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        androidBlinkAnimator.start();
+        tvAndroid.setOnClickListener(v -> mostrarIconoAndroid());
+    }
+
+    private void mostrarIconoAndroid() {
+        FrameLayout contentRoot = findViewById(android.R.id.content);
+        ImageView icono = new ImageView(this);
+        icono.setImageResource(R.drawable.ic_launcher_foreground);
+        icono.setBackgroundColor(Color.TRANSPARENT);
+        icono.setContentDescription("Icono Android animado");
+
+        int size = dpToPx(96);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, size);
+        params.gravity = Gravity.TOP | Gravity.START;
+        contentRoot.addView(icono, params);
+
+        contentRoot.post(() -> {
+            icono.setTranslationX(-size);
+            icono.setTranslationY(dpToPx(90));
+
+            ObjectAnimator moveX = ObjectAnimator.ofFloat(
+                    icono,
+                    View.TRANSLATION_X,
+                    -size,
+                    contentRoot.getWidth() + size
+            );
+            ObjectAnimator moveY = ObjectAnimator.ofFloat(
+                    icono,
+                    View.TRANSLATION_Y,
+                    dpToPx(90),
+                    dpToPx(40),
+                    dpToPx(140),
+                    dpToPx(90)
+            );
+            ObjectAnimator rotate = ObjectAnimator.ofFloat(icono, View.ROTATION, 0f, 360f);
+
+            AnimatorSet animation = new AnimatorSet();
+            animation.playTogether(moveX, moveY, rotate);
+            animation.setDuration(2600);
+            animation.addListener(new android.animation.AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(android.animation.Animator animation) {
+                    contentRoot.removeView(icono);
+                }
+            });
+            animation.start();
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (androidBlinkAnimator != null) {
+            androidBlinkAnimator.cancel();
+        }
+        super.onDestroy();
     }
 }

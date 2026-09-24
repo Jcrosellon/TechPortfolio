@@ -63,12 +63,12 @@ public class FotosFragment extends Fragment {
                 "Diseño de interfaz responsive para una experiencia sencilla."
         };
         int[] recursosImagenes = {
-                R.raw.proyecto_01,
-                R.raw.proyecto_02,
-                R.raw.proyecto_03,
-                R.raw.proyecto_04,
-                R.raw.proyecto_05,
-                R.raw.proyecto_06
+                R.drawable.proyecto_01,
+                R.drawable.proyecto_02,
+                R.drawable.proyecto_03,
+                R.drawable.proyecto_04,
+                R.drawable.proyecto_05,
+                R.drawable.proyecto_06
         };
         imagenes = new android.graphics.Bitmap[recursosImagenes.length];
 
