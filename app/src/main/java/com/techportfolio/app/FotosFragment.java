@@ -13,10 +13,6 @@ import androidx.fragment.app.Fragment;
 
 public class FotosFragment extends Fragment {
 
-    private ImageButton imgProyecto1;
-    private ImageButton imgProyecto2;
-    private ImageButton imgProyecto3;
-
     private TextView tvDescripcionFoto;
 
     public FotosFragment() {
@@ -30,35 +26,32 @@ public class FotosFragment extends Fragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(
-                R.layout.fragment_fotos,
-                container,
-                false
-        );
-
-        imgProyecto1 = view.findViewById(R.id.imgProyecto1);
-        imgProyecto2 = view.findViewById(R.id.imgProyecto2);
-        imgProyecto3 = view.findViewById(R.id.imgProyecto3);
-
+        View view = inflater.inflate(R.layout.fragment_fotos, container, false);
         tvDescripcionFoto = view.findViewById(R.id.tvDescripcionFoto);
 
-        imgProyecto1.setOnClickListener(v ->
-                mostrarDescripcion(
-                        "Proyecto 1: Aplicación móvil desarrollada en Android Studio para gestionar información profesional."
-                )
-        );
+        ImageButton[] proyectos = {
+                view.findViewById(R.id.imgProyecto1),
+                view.findViewById(R.id.imgProyecto2),
+                view.findViewById(R.id.imgProyecto3),
+                view.findViewById(R.id.imgProyecto4),
+                view.findViewById(R.id.imgProyecto5),
+                view.findViewById(R.id.imgProyecto6)
+        };
+        String[] descripciones = {
+                "Proyecto de aplicación móvil desarrollado en Android Studio.",
+                "Sistema de inventario diseñado para controlar productos, entradas y salidas.",
+                "Interfaz web enfocada en la presentación de servicios y proyectos.",
+                "Aplicación académica para gestionar información y tareas.",
+                "Prototipo de solución tecnológica para procesos empresariales.",
+                "Diseño de interfaz responsive para una experiencia sencilla."
+        };
 
-        imgProyecto2.setOnClickListener(v ->
-                mostrarDescripcion(
-                        "Proyecto 2: Sistema de inventario diseñado para controlar productos, entradas y salidas."
-                )
-        );
-
-        imgProyecto3.setOnClickListener(v ->
-                mostrarDescripcion(
-                        "Proyecto 3: Desarrollo de una interfaz web enfocada en la presentación de servicios y proyectos."
-                )
-        );
+        for (int i = 0; i < proyectos.length; i++) {
+            final int posicion = i;
+            proyectos[i].setOnClickListener(v ->
+                    mostrarDescripcion(descripciones[posicion])
+            );
+        }
 
         return view;
     }

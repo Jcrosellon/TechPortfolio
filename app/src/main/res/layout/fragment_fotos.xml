@@ -11,155 +11,293 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Proyectos destacados"
+            android:text="Galería de proyectos"
             android:textColor="@color/tp_text_primary"
-            android:textSize="22sp"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Explora algunos trabajos realizados"
+            android:layout_marginTop="2dp"
+            android:text="Seleccione una imagen para consultar su descripción."
             android:textColor="@color/tp_text_secondary"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
-        <HorizontalScrollView
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:clipToPadding="false"
-            android:scrollbars="none">
+            android:layout_marginTop="20dp"
+            android:alignmentMode="alignMargins"
+            android:columnCount="3"
+            android:useDefaultMargins="false">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
 
-                <LinearLayout
-                    android:layout_width="150dp"
-                    android:layout_height="190dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_card"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                <ImageButton
+                    android:id="@+id/imgProyecto1"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:background="#D7E8FC"
+                    android:contentDescription="Proyecto 01"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:tint="@color/white" />
 
-                    <ImageButton
-                        android:id="@+id/imgProyecto1"
-                        android:layout_width="120dp"
-                        android:layout_height="110dp"
-                        android:background="@color/tp_blue_light"
-                        android:contentDescription="Proyecto 1"
-                        android:padding="26dp"
-                        android:scaleType="centerInside"
-                        android:src="@android:drawable/ic_menu_gallery" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Proyecto 01"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:text="App Android"
-                        android:textColor="@color/tp_text_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="150dp"
-                    android:layout_height="190dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_card"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageButton
-                        android:id="@+id/imgProyecto2"
-                        android:layout_width="120dp"
-                        android:layout_height="110dp"
-                        android:background="@color/tp_blue_light"
-                        android:contentDescription="Proyecto 2"
-                        android:padding="26dp"
-                        android:scaleType="centerInside"
-                        android:src="@android:drawable/ic_menu_camera" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:text="Inventario"
-                        android:textColor="@color/tp_text_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="150dp"
-                    android:layout_height="190dp"
-                    android:background="@drawable/bg_card"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageButton
-                        android:id="@+id/imgProyecto3"
-                        android:layout_width="120dp"
-                        android:layout_height="110dp"
-                        android:background="@color/tp_blue_light"
-                        android:contentDescription="Proyecto 3"
-                        android:padding="26dp"
-                        android:scaleType="centerInside"
-                        android:src="@android:drawable/ic_menu_slideshow" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:text="Desarrollo Web"
-                        android:textColor="@color/tp_text_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tocar para ver detalle"
+                    android:textColor="@color/tp_text_secondary"
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
-        </HorizontalScrollView>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageButton
+                    android:id="@+id/imgProyecto2"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:background="#E6DDFB"
+                    android:contentDescription="Proyecto 02"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Proyecto 02"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tocar para ver detalle"
+                    android:textColor="@color/tp_text_secondary"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageButton
+                    android:id="@+id/imgProyecto3"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:background="#DDF2E9"
+                    android:contentDescription="Proyecto 03"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_slideshow"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Proyecto 03"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tocar para ver detalle"
+                    android:textColor="@color/tp_text_secondary"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageButton
+                    android:id="@+id/imgProyecto4"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:background="#FBE3E3"
+                    android:contentDescription="Proyecto 04"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Proyecto 04"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tocar para ver detalle"
+                    android:textColor="@color/tp_text_secondary"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageButton
+                    android:id="@+id/imgProyecto5"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:background="#FCEED5"
+                    android:contentDescription="Proyecto 05"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Proyecto 05"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tocar para ver detalle"
+                    android:textColor="@color/tp_text_secondary"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <ImageButton
+                    android:id="@+id/imgProyecto6"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:background="#DDF1F7"
+                    android:contentDescription="Proyecto 06"
+                    android:padding="22dp"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_slideshow"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Proyecto 06"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tocar para ver detalle"
+                    android:textColor="@color/tp_text_secondary"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+        </GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/bg_card"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción"
+                android:text="Descripción de la imagen seleccionada"
                 android:textColor="@color/tp_text_primary"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvDescripcionFoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Proyecto de aplicación móvil desarrollado en Android Studio."
+                android:textColor="@color/tp_text_secondary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:lineSpacingExtra="3dp"
-                android:text="Selecciona un proyecto para conocer sus detalles."
+                android:text="La galería puede desplazarse para consultar más elementos."
                 android:textColor="@color/tp_text_secondary"
                 android:textSize="14sp" />
 
