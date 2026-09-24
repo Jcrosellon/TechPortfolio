@@ -46,7 +46,9 @@
                 android:layout_height="100dp"
                 android:contentDescription="Foto de perfil"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher_round" />
+                 android:src="@drawable/perfil"
+                 android:clickable="true"
+                 android:focusable="true" />
 
             <TextView
                 android:id="@+id/tvNombre"
