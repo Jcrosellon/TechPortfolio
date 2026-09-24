@@ -16,6 +16,7 @@ public class BotonesFragment extends Fragment {
 
     private Button btnMensaje;
     private Button btnCambiarTexto;
+    private Button btnCambiarImagen;
     private Button btnAumentar;
     private Button btnReiniciar;
 
@@ -44,6 +45,7 @@ public class BotonesFragment extends Fragment {
         // Vincular variables con los identificadores XML
         btnMensaje = view.findViewById(R.id.btnMensaje);
         btnCambiarTexto = view.findViewById(R.id.btnCambiarTexto);
+        btnCambiarImagen = view.findViewById(R.id.btnCambiarImagen);
         btnAumentar = view.findViewById(R.id.btnAumentar);
         btnReiniciar = view.findViewById(R.id.btnReiniciar);
 
@@ -54,6 +56,8 @@ public class BotonesFragment extends Fragment {
         btnMensaje.setOnClickListener(v -> mostrarMensaje());
 
         btnCambiarTexto.setOnClickListener(v -> cambiarTexto());
+
+        btnCambiarImagen.setOnClickListener(v -> cambiarImagen());
 
         btnAumentar.setOnClickListener(v -> aumentarContador());
 
@@ -78,12 +82,16 @@ public class BotonesFragment extends Fragment {
         );
     }
 
+    private void cambiarImagen() {
+        tvResultado.setText("La imagen fue modificada correctamente.");
+    }
+
     private void aumentarContador() {
 
         contador++;
 
         tvContador.setText(
-                "Contador: " + contador
+                String.valueOf(contador)
         );
     }
 
@@ -92,7 +100,7 @@ public class BotonesFragment extends Fragment {
         contador = 0;
 
         tvContador.setText(
-                "Contador: 0"
+                "0"
         );
 
         tvResultado.setText(
