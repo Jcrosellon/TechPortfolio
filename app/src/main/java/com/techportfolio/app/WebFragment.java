@@ -33,6 +33,9 @@ public class WebFragment extends Fragment {
     private FrameLayout webViewContainer;
     private LinearLayout historialContainer;
     private ProgressBar webProgress;
+    private TextView webTitle;
+    private TextView webSubtitle;
+    private LinearLayout webControls;
     private WebView webView;
     private final ArrayList<String> historial = new ArrayList<>();
 
@@ -58,6 +61,9 @@ public class WebFragment extends Fragment {
         webViewContainer = view.findViewById(R.id.webViewContainer);
         historialContainer = view.findViewById(R.id.historialContainer);
         webProgress = view.findViewById(R.id.webProgress);
+        webTitle = view.findViewById(R.id.webTitle);
+        webSubtitle = view.findViewById(R.id.webSubtitle);
+        webControls = view.findViewById(R.id.webControls);
         ajustarContenidoHorizontal(view);
 
         btnBuscarWeb.setOnClickListener(v -> cargarPagina());
@@ -113,6 +119,9 @@ public class WebFragment extends Fragment {
                 webProgress.setVisibility(View.GONE);
             }
         });
+        webView.setOnScrollChangeListener((view, scrollX, scrollY, oldScrollX, oldScrollY) ->
+                actualizarCabeceraWeb(scrollY <= dpToPx(12))
+        );
 
         // Algunas páginas modernas necesitan JavaScript
         webView.getSettings().setJavaScriptEnabled(true);
@@ -223,6 +232,13 @@ public class WebFragment extends Fragment {
 
     private int dpToPx(int dp) {
         return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
+    }
+
+    private void actualizarCabeceraWeb(boolean mostrar) {
+        int visibility = mostrar ? View.VISIBLE : View.GONE;
+        webTitle.setVisibility(visibility);
+        webSubtitle.setVisibility(visibility);
+        webControls.setVisibility(visibility);
     }
 
     @Override
