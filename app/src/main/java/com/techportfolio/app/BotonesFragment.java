@@ -1,11 +1,13 @@
 package com.techportfolio.app;
 
 import android.os.Bundle;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,8 @@ public class BotonesFragment extends Fragment {
         tvResultado = view.findViewById(R.id.tvResultado);
         tvContador = view.findViewById(R.id.tvContador);
 
+        ajustarLayoutOrientacion(view);
+
         // Eventos
         btnMensaje.setOnClickListener(v -> mostrarMensaje());
 
@@ -64,6 +68,55 @@ public class BotonesFragment extends Fragment {
         btnReiniciar.setOnClickListener(v -> reiniciarContador());
 
         return view;
+    }
+
+    private void ajustarLayoutOrientacion(View view) {
+        boolean horizontal = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+        LinearLayout mainCard = view.findViewById(R.id.botonesMainCard);
+        LinearLayout acciones = view.findViewById(R.id.accionesColumn);
+        LinearLayout contadorColumn = view.findViewById(R.id.contadorColumn);
+        TextView titulo = view.findViewById(R.id.tvBotonesTitulo);
+        TextView subtitulo = view.findViewById(R.id.tvBotonesSubtitulo);
+
+        titulo.setTextSize(horizontal ? 28 : 22);
+        subtitulo.setTextSize(horizontal ? 16 : 13);
+
+        if (horizontal) {
+            mainCard.setOrientation(LinearLayout.HORIZONTAL);
+            configurarColumna(acciones, true, false);
+            configurarColumna(contadorColumn, true, false);
+        } else {
+            mainCard.setOrientation(LinearLayout.VERTICAL);
+            configurarColumna(acciones, false, false);
+            configurarColumna(contadorColumn, false, true);
+        }
+    }
+
+    private void configurarColumna(
+            LinearLayout columna,
+            boolean horizontal,
+            boolean separacionSuperior) {
+        LinearLayout.LayoutParams params =
+                (LinearLayout.LayoutParams) columna.getLayoutParams();
+        params.width = horizontal ? 0 : LinearLayout.LayoutParams.MATCH_PARENT;
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        params.weight = horizontal ? 1 : 0;
+        params.topMargin = separacionSuperior ? dpToPx(18) : 0;
+        params.setMarginStart(0);
+        params.setMarginEnd(0);
+        boolean contador = columna.getId() == R.id.contadorColumn;
+        columna.setPadding(
+                horizontal && contador ? dpToPx(12) : 0,
+                0,
+                horizontal && !contador ? dpToPx(12) : 0,
+                0
+        );
+        columna.setLayoutParams(params);
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
     }
 
     private void mostrarMensaje() {
