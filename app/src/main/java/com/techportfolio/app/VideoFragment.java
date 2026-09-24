@@ -7,7 +7,9 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -30,6 +32,8 @@ public class VideoFragment extends Fragment {
     private TextView tvVideoTime;
     private TextView tvVideoError;
     private View videoCenterControls;
+    private View videoBottomControls;
+    private FrameLayout videoPlayerContainer;
     private boolean videoReady;
     private int videoDuration;
     private boolean userSeeking;
@@ -43,6 +47,11 @@ public class VideoFragment extends Fragment {
                 actualizarBarraProgreso();
                 progressHandler.postDelayed(this, 500);
             }
+        }
+    };
+    private final Runnable hideControls = () -> {
+        if (videoBottomControls != null) {
+            videoBottomControls.setVisibility(View.GONE);
         }
     };
 
@@ -68,6 +77,20 @@ public class VideoFragment extends Fragment {
         tvVideoTime = view.findViewById(R.id.tvVideoTime);
         tvVideoError = view.findViewById(R.id.tvVideoError);
         videoCenterControls = view.findViewById(R.id.videoCenterControls);
+        videoBottomControls = view.findViewById(R.id.videoBottomControls);
+        videoPlayerContainer = view.findViewById(R.id.videoPlayerContainer);
+        videoPlayerContainer.post(this::ajustarProporcionVideo);
+        videoPlayerContainer.addOnLayoutChangeListener((v, left, top, right, bottom,
+                                                         oldLeft, oldTop, oldRight, oldBottom) ->
+                ajustarProporcionVideo()
+        );
+
+        videoView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                mostrarControles();
+            }
+            return false;
+        });
 
         btnVideoPlay.setOnClickListener(v -> alternarReproduccion());
         btnVideoMiniPlay.setOnClickListener(v -> alternarReproduccion());
@@ -111,6 +134,7 @@ public class VideoFragment extends Fragment {
             tvVideoTime.setText(formatearTiempo(videoDuration));
             actualizarBotonReproduccion();
             progressHandler.post(progressUpdater);
+            mostrarControles();
         });
         videoView.setOnCompletionListener(mediaPlayer -> {
             videoView.seekTo(0);
@@ -134,6 +158,13 @@ public class VideoFragment extends Fragment {
             videoView.start();
         }
         actualizarBotonReproduccion();
+        mostrarControles();
+    }
+
+    private void mostrarControles() {
+        videoBottomControls.setVisibility(View.VISIBLE);
+        progressHandler.removeCallbacks(hideControls);
+        progressHandler.postDelayed(hideControls, 3000);
     }
 
     private void alternarPantallaCompleta() {
@@ -152,6 +183,21 @@ public class VideoFragment extends Fragment {
                 "android"
         );
         return icono != 0 ? icono : android.R.drawable.ic_menu_zoom;
+    }
+
+    private void ajustarProporcionVideo() {
+        if (videoPlayerContainer == null || videoPlayerContainer.getWidth() == 0) {
+            return;
+        }
+
+        LinearLayout.LayoutParams params =
+                (LinearLayout.LayoutParams) videoPlayerContainer.getLayoutParams();
+        int height = Math.round(videoPlayerContainer.getWidth() * 9f / 16f);
+        if (params.height == height) {
+            return;
+        }
+        params.height = height;
+        videoPlayerContainer.setLayoutParams(params);
     }
 
     private void actualizarBotonReproduccion() {
@@ -196,6 +242,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         progressHandler.removeCallbacks(progressUpdater);
+        progressHandler.removeCallbacks(hideControls);
         if (videoView != null) {
             videoView.stopPlayback();
         }
