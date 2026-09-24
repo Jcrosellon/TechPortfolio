@@ -167,7 +167,7 @@ public class MenuFragment extends Fragment {
 
     private void mostrarFragmento(String tag, Fragment fragmentoNuevo) {
         FragmentManager fragmentManager = getParentFragmentManager();
-        Fragment actual = fragmentManager.findFragmentById(R.id.contentFragmentContainer);
+        Fragment actual = obtenerFragmentoVisible(fragmentManager);
         Fragment destino = fragmentManager.findFragmentByTag(tag);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction()
@@ -185,6 +185,17 @@ public class MenuFragment extends Fragment {
         }
 
         transaction.commit();
+    }
+
+    private Fragment obtenerFragmentoVisible(FragmentManager fragmentManager) {
+        String[] tags = {"perfil", "fotos", "video", "web", "botones"};
+        for (String tag : tags) {
+            Fragment fragment = fragmentManager.findFragmentByTag(tag);
+            if (fragment != null && !fragment.isHidden()) {
+                return fragment;
+            }
+        }
+        return null;
     }
 
     private void seleccionarBoton(Button botonSeleccionado) {
