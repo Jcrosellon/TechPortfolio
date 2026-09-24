@@ -3,6 +3,9 @@
     <style name="Base.Theme.TechPortfolio" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowSplashScreenBackground">@color/tp_navy</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/inicio</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/tp_navy</item>
     </style>
 
     <style name="Theme.TechPortfolio" parent="Base.Theme.TechPortfolio" />
